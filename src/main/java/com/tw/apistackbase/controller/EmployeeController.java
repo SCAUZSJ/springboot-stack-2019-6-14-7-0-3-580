@@ -20,6 +20,7 @@ public class EmployeeController {
     private Map<Integer,Employee> employees = new HashMap<>();
     @GetMapping
     public ResponseEntity getAll() {
+        this.employees.put(1,new Employee(1,"A",20,"male"));
         return ResponseEntity.ok().body(employees.values().toArray());
     }
 
@@ -45,8 +46,10 @@ public class EmployeeController {
     public ResponseEntity delete(@PathVariable int employeeID){
         if(this.employees.containsKey(employeeID)){
             this.employees.remove(employeeID);
+            return ResponseEntity.ok().build();
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
     }
 
 
